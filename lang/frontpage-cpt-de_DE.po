@@ -1,0 +1,84 @@
+# Copyright (C) 2016 Front Page Custom Post Type
+# This file is distributed under the same license as the Front Page Custom Post Type package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Front Page Custom Post Type 1.0\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/frontpage_cpt\n"
+"POT-Creation-Date: 2016-04-20 20:45+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2016-04-20 20:53+0200\n"
+"Language-Team: \n"
+"X-Generator: Poedit 1.8.7\n"
+"Last-Translator: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: de\n"
+
+#: frontpage_cpt.php:27
+msgid "Front Pages"
+msgstr "Startseiten"
+
+#: frontpage_cpt.php:28
+msgid "Front Page"
+msgstr "Startseite"
+
+#: frontpage_cpt.php:38
+msgid "Add New"
+msgstr "Erstellen"
+
+#: frontpage_cpt.php:39
+msgid "Add New %s"
+msgstr "Neue %s erstellen"
+
+#: frontpage_cpt.php:40
+msgid "New %s"
+msgstr "Neue %s"
+
+#: frontpage_cpt.php:41
+msgid "Edit %s"
+msgstr "%s bearbeiten"
+
+#: frontpage_cpt.php:42
+msgid "View %s"
+msgstr "%s ansehen"
+
+#: frontpage_cpt.php:43
+msgid "All %s"
+msgstr "Alle %s"
+
+#: frontpage_cpt.php:44
+msgid "Search %s"
+msgstr "%s suchen"
+
+#: frontpage_cpt.php:45
+msgid "Parent %s"
+msgstr "Übergeordnete %s"
+
+#: frontpage_cpt.php:46
+msgid "No %s Found"
+msgstr "Keine %s gefunden"
+
+#: frontpage_cpt.php:47
+msgid "No %s Found in Trash"
+msgstr "Keine %s im Papierkorb gefunden"
+
+#. Plugin Name of the plugin/theme
+msgid "Front Page Custom Post Type"
+msgstr "Front Page Custom Post Type"
+
+#. Plugin URI of the plugin/theme
+msgid "http://my-awesomeness-emporium.com"
+msgstr "http://my-awesomeness-emporium.com"
+
+#. Description of the plugin/theme
+msgid "a plugin to create awesomeness and spread joy"
+msgstr "Deutsche Beschreibung hier"
+
+#. Author of the plugin/theme
+msgid "Norman Kämper-Leymann"
+msgstr "Norman Kämper-Leymann"
+
+#. Author URI of the plugin/theme
+msgid "http://berlin-coding.de"
+msgstr "http://berlin-coding.de"
