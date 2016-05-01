@@ -4,5 +4,4 @@ This WordPress plugin creates a custom post type "Front Page" with some custom f
 
 TODO:
 
-- add option to set as front page
 - add custom fields
