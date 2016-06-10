@@ -76,9 +76,10 @@ function frontpage_cpt_textdomain() {
 add_action( 'plugins_loaded', 'frontpage_cpt_textdomain' );
 
 /**
- * Merges Front Page posts into array of all page posts.
+ * Merges Front Page posts into array of all page posts for static front page select list.
  *
  * @param $pages
+ *
  * @return array
  */
 function frontpage_cpt_frontpage_select( $pages ) {
@@ -97,7 +98,7 @@ function frontpage_cpt_frontpage_select( $pages ) {
 add_filter( 'get_pages', 'frontpage_cpt_frontpage_select' );
 
 /**
- * Adds Front Page posts as options for static front page select list.
+ * Ensures Front Page posts being displayed as static front page when chosen.
  *
  * @param $query
  */
@@ -108,6 +109,8 @@ function frontpage_cpt_enable_frontpage( $query ) {
 }
 
 add_action( 'pre_get_posts', 'frontpage_cpt_enable_frontpage' );
+
+/* META BOXES */
 
 /**
  * Adds custom fields (meta boxes) to Front Page CPT.
@@ -178,6 +181,8 @@ function save_details() {
 
 add_action( 'save_post', 'save_details' );
 
+/* CUSTOM SETTINGS PAGE */
+
 /**
  * Adds a custom settings page.
  */
@@ -186,11 +191,11 @@ function wporg_custom_admin_menu() {
 	$text_domain = 'frontpage-cpt';
 
 	add_options_page(
-		$page_title = __( 'My Plugin Title', $text_domain ),
-		$menu_title = __( 'My Plugin Menu Item', $text_domain ),
+		$page_title = __( 'Custom Options', $text_domain ),
+		$menu_title = __( 'Custom Options', $text_domain ),
 		$capability = 'manage_options',
-		$menu_slug = 'wporg-plugin',
-		$function = 'wporg_options_page'
+		$menu_slug = 'custom-options',
+		$function = 'custom_options_page'
 
 	);
 }
@@ -200,7 +205,7 @@ add_action( 'admin_menu', 'wporg_custom_admin_menu' );
 /**
  * Page callback.
  */
-function wporg_options_page() {
+function custom_options_page() {
 
 	?>
 	<div class='wrap'>
@@ -227,9 +232,9 @@ function display_theme_panel_fields() {
 	add_settings_section( $id = 'my_section', $title = __( 'My Settings', $text_domain ), $callback = NULL, $page = 'theme-options' );
 
 	// Add fields to section.
-	add_settings_field( $id = 'twitter_url', $title = __( 'Twitter Profile Url' ), $callback = 'display_twitter_element', $page = 'theme-options', $section = 'my_section' );
-	add_settings_field( $id = 'facebook_url', $title = __( 'Facebook Profile Url' ), $callback = 'display_facebook_element', $page = 'theme-options', $section = 'my_section' );
-	add_settings_field( $id = 'theme_layout', $title = __( 'Do you want the layout to be responsive?' ), $callback = 'display_layout_element', $page = 'theme-options', $section = 'my_section' );
+	add_settings_field( $id = 'twitter_url', $title = __( 'Twitter Profile Url', $text_domain ), $callback = 'display_twitter_element', $page = 'theme-options', $section = 'my_section' );
+	add_settings_field( $id = 'facebook_url', $title = __( 'Facebook Profile Url', $text_domain ), $callback = 'display_facebook_element', $page = 'theme-options', $section = 'my_section' );
+	add_settings_field( $id = 'theme_layout', $title = __( 'Do you want the layout to be responsive?', $text_domain ), $callback = 'display_layout_element', $page = 'theme-options', $section = 'my_section' );
 
 	// Register settings.
 	register_setting( 'section', 'twitter_url' );
@@ -254,10 +259,10 @@ function display_twitter_element() {
  */
 function display_facebook_element() {
 
-/*	?>
-	<input type='text' name='facebook_url' id='facebook_url' value='<?php echo get_option( 'facebook_url' ); ?>'/>
-	<?php
-*/
+	/*	?>
+		<input type='text' name='facebook_url' id='facebook_url' value='<?php echo get_option( 'facebook_url' ); ?>'/>
+		<?php
+	*/
 	wp_editor( $content = get_option( 'facebook_url' ), $editor_id = 'meD_stylee', $settings = array(
 		'textarea_name' => 'facebook_url',
 		'media_buttons' => FALSE,
