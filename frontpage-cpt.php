@@ -109,37 +109,45 @@ function frontpage_cpt_enable_frontpage( $query ) {
 
 add_action( 'pre_get_posts', 'frontpage_cpt_enable_frontpage' );
 
+/**
+ * Adds custom fields (meta boxes) to Front Page CPT.
+ */
 function admin_init() {
 
 	add_meta_box( $id = 'year_completed-meta', $title = 'Year Completed', $callback = 'year_completed', $screen = 'frontpage_cpt', $context = 'side', $priority = 'low', $callback_args = NULL );
 	add_meta_box( $id = 'credits_meta', $title = 'Design & Build Credits', $callback = 'credits_meta', $screen = 'frontpage_cpt', $context = 'normal', $priority = 'low', $callback_args = NULL );
-//	add_meta_box( $id, $title, $callback, $page, $context, $priority );
-//	add_meta_box ( $id, $title, $callback, $screen = null, $context = 'advanced', $priority = 'default', $callback_args = null );
-//	add_meta_box( 'hello', 'Hello Hello', 'hello_callback', $screen = NULL, $context = 'advanced', $priority = 'default', $callback_args = NULL );
 }
 
-function hello_callback() {
+add_action( 'admin_init', 'admin_init' );
 
-}
-
+/**
+ * Meta box callback.
+ */
 function year_completed() {
 
 	global $post;
 	$custom = get_post_custom( $post->ID );
+
 	$year_completed = $custom['year_completed'][0];
+
 	?>
 	<label>Year:</label>
 	<input name='year_completed' value='<?php echo $year_completed; ?>'/>
 	<?php
 }
 
+/**
+ * Meta box callback.
+ */
 function credits_meta() {
 
 	global $post;
 	$custom = get_post_custom( $post->ID );
+
 	$designers = $custom['designers'][0];
 	$developers = $custom['developers'][0];
 	$producers = $custom['producers'][0];
+
 	?>
 	<p><label>Designed By:</label><br/>
 		<?php wp_editor( $content = $designers, $editor_id = 'mettaabox_ID_stylee', $settings = array(
@@ -155,8 +163,9 @@ function credits_meta() {
 	<?php
 }
 
-add_action( 'admin_init', 'admin_init' );
-
+/**
+ * Ensures meta box values to get saved correctly.
+ */
 function save_details() {
 
 	global $post;
@@ -168,3 +177,101 @@ function save_details() {
 }
 
 add_action( 'save_post', 'save_details' );
+
+/**
+ * Adds a custom settings page.
+ */
+function wporg_custom_admin_menu() {
+
+	$text_domain = 'frontpage-cpt';
+
+	add_options_page(
+		$page_title = __( 'My Plugin Title', $text_domain ),
+		$menu_title = __( 'My Plugin Menu Item', $text_domain ),
+		$capability = 'manage_options',
+		$menu_slug = 'wporg-plugin',
+		$function = 'wporg_options_page'
+
+	);
+}
+
+add_action( 'admin_menu', 'wporg_custom_admin_menu' );
+
+/**
+ * Page callback.
+ */
+function wporg_options_page() {
+
+	?>
+	<div class='wrap'>
+		<h1>Theme Panel</h1>
+		<form method='post' action='options.php'>
+			<?php
+			settings_fields( 'section' );
+			do_settings_sections( 'theme-options' );
+			submit_button();
+			?>
+		</form>
+	</div>
+	<?php
+}
+
+/**
+ * Adds section, fields and registers settings.
+ */
+function display_theme_panel_fields() {
+
+	$text_domain = 'frontpage-cpt';
+
+	// Add section.
+	add_settings_section( $id = 'my_section', $title = __( 'My Settings', $text_domain ), $callback = NULL, $page = 'theme-options' );
+
+	// Add fields to section.
+	add_settings_field( $id = 'twitter_url', $title = __( 'Twitter Profile Url' ), $callback = 'display_twitter_element', $page = 'theme-options', $section = 'my_section' );
+	add_settings_field( $id = 'facebook_url', $title = __( 'Facebook Profile Url' ), $callback = 'display_facebook_element', $page = 'theme-options', $section = 'my_section' );
+	add_settings_field( $id = 'theme_layout', $title = __( 'Do you want the layout to be responsive?' ), $callback = 'display_layout_element', $page = 'theme-options', $section = 'my_section' );
+
+	// Register settings.
+	register_setting( 'section', 'twitter_url' );
+	register_setting( 'section', 'facebook_url' );
+	register_setting( 'section', 'theme_layout' );
+}
+
+add_action( 'admin_init', 'display_theme_panel_fields' );
+
+/**
+ * Field callback.
+ */
+function display_twitter_element() {
+
+	?>
+	<input type='text' name='twitter_url' id='twitter_url' value='<?php echo get_option( 'twitter_url' ); ?>'/>
+	<?php
+}
+
+/**
+ * Field callback.
+ */
+function display_facebook_element() {
+
+/*	?>
+	<input type='text' name='facebook_url' id='facebook_url' value='<?php echo get_option( 'facebook_url' ); ?>'/>
+	<?php
+*/
+	wp_editor( $content = get_option( 'facebook_url' ), $editor_id = 'meD_stylee', $settings = array(
+		'textarea_name' => 'facebook_url',
+		'media_buttons' => FALSE,
+		'textarea_rows' => 5,
+
+	) );
+}
+
+/**
+ * Field callback.
+ */
+function display_layout_element() {
+
+	?>
+	<input type='checkbox' name='theme_layout' value='1' <?php checked( 1, get_option( 'theme_layout' ), TRUE ); ?> />
+	<?php
+}
