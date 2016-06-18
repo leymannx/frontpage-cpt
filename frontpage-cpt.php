@@ -59,7 +59,8 @@ function frontpage_cpt_create() {
 			'editor',
 			'thumbnail',
 //			'custom-fields',
-			'revisions', ),
+//			'revisions',
+		),
 		'has_archive'         => FALSE,
 		'rewrite'             => array( 'slug' => $slug ),
 		'query_var'           => FALSE, // rabbit hole
